@@ -246,9 +246,31 @@
 
 ### Write-up 4
 
-原 `swap(int i, int j)` 只交换函数内的值拷贝，不能改变 `main` 的 `k`、`m`。将参数改为指针，并在 `main` 中传入变量地址。修改后的代码见截图。
+原 `swap(int i, int j)` 只交换函数内的值拷贝，不能改变 `main` 的 `k`、`m`。将参数改为指针，并在 `main` 中传入变量地址。
 
-![修改后的 swap.c 代码](images/writeup4-swap-code.png)
+```c
+// Copyright (c) 2012 MIT License by 6.172 Staff
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+void swap(int *i, int *j) {
+  int temp = *i;
+  *i = *j;
+  *j = temp;
+}
+
+int main() {
+  int k = 1;
+  int m = 2;
+  swap(&k, &m);
+  // What does this print?
+  printf("k = %d, m = %d\n", k, m);
+
+  return 0;
+}
+```
 
 `./swap` 输出 `k = 2, m = 1`。
 
