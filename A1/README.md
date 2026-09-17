@@ -178,8 +178,6 @@
 
 ![lstopo 生成的拓扑图](topo.svg)
 
-![在浏览器中打开 topo.svg](images/17-topo-open.png)
-
 ### (18) Git 命令练习
 
 **① 用户名和邮箱。** 执行 `git config user.name "丁熙妍"`、`git config user.email "10234500007@stu.ecnu.edu.cn"`，再用 `git config --get` 查看设置结果。
