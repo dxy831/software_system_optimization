@@ -1,0 +1,10 @@
+# 1 "preprocess.c"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 389 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "preprocess.c" 2
+# 12 "preprocess.c"
+int c = 1, d = 1 + 5;
+int e = ((c) < (d) ? (c) : (d));

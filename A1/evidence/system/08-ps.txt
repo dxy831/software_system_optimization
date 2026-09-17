@@ -1,0 +1,69 @@
+$ ps -aux
+your 131072x1 screen size is bogus. expect trouble
+your 131072x1 screen size is bogus. expect trouble
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1 14.3  0.1  21788 12072 ?        Ss   11:14   0:00 /sbin/init
+root           2  0.1  0.0   3120  1920 ?        Sl   11:14   0:00 /init
+root           8  0.0  0.0   3120  1728 ?        Sl   11:14   0:00 plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate
+root          44  4.7  0.1  42108 15552 ?        S<s  11:14   0:00 /usr/lib/systemd/systemd-journald
+root          96  3.9  0.0  24888  6144 ?        Ss   11:14   0:00 /usr/lib/systemd/systemd-udevd
+root         109  0.4  0.0  24760  4472 ?        S    11:14   0:00 (udev-worker)
+root         110  0.7  0.0  24760  4088 ?        S    11:14   0:00 (udev-worker)
+root         111  0.2  0.0  24760  3896 ?        S    11:14   0:00 (udev-worker)
+root         112  0.2  0.0  24760  4092 ?        S    11:14   0:00 (udev-worker)
+root         113  0.4  0.0  24760  4128 ?        S    11:14   0:00 (udev-worker)
+root         114  0.4  0.0  24760  3944 ?        S    11:14   0:00 (udev-worker)
+root         115  1.1  0.0  24760  5272 ?        S    11:14   0:00 (udev-worker)
+root         117  0.0  0.0  24760  3564 ?        S    11:14   0:00 (udev-worker)
+root         118  0.0  0.0  24760  3952 ?        S    11:14   0:00 (udev-worker)
+root         119  0.2  0.0  24760  4152 ?        S    11:14   0:00 (udev-worker)
+root         120  0.7  0.0  25188  4732 ?        S    11:14   0:00 (udev-worker)
+root         122  0.2  0.0  24760  3984 ?        S    11:14   0:00 (udev-worker)
+root         125  0.2  0.0  24760  3984 ?        S    11:14   0:00 (udev-worker)
+root         126  0.2  0.0  24868  4420 ?        S    11:14   0:00 (udev-worker)
+root         127  0.4  0.0  24864  4756 ?        S    11:14   0:00 (udev-worker)
+root         129  0.0  0.0  24760  3604 ?        S    11:14   0:00 (udev-worker)
+root         130  0.0  0.0  24760  3800 ?        S    11:14   0:00 (udev-worker)
+root         137  0.2  0.0  24760  3992 ?        S    11:14   0:00 (udev-worker)
+root         138  0.4  0.0  24760  3992 ?        S    11:14   0:00 (udev-worker)
+root         139  0.0  0.0  24760  3608 ?        S    11:14   0:00 (udev-worker)
+root         140  0.2  0.0  24760  4184 ?        S    11:14   0:00 (udev-worker)
+root         141  0.0  0.0  24760  3800 ?        S    11:14   0:00 (udev-worker)
+root         142  0.0  0.0  24760  3992 ?        S    11:14   0:00 (udev-worker)
+root         143  0.0  0.0  24760  3616 ?        S    11:14   0:00 (udev-worker)
+root         144  0.2  0.0  24760  4192 ?        S    11:14   0:00 (udev-worker)
+root         145  0.2  0.0  24888  4772 ?        S    11:14   0:00 (udev-worker)
+root         146  0.0  0.0  24760  3620 ?        S    11:14   0:00 (udev-worker)
+root         147  0.0  0.0  24884  3620 ?        S    11:14   0:00 (udev-worker)
+root         148  0.0  0.0  24884  4004 ?        S    11:14   0:00 (udev-worker)
+root         149  0.0  0.0  24888  4968 ?        S    11:14   0:00 (udev-worker)
+root         150  0.0  0.0  24888  4008 ?        S    11:14   0:00 (udev-worker)
+root         154  0.0  0.0  24892  3856 ?        S    11:14   0:00 (udev-worker)
+root         155  0.2  0.0  24892  3304 ?        S    11:14   0:00 (udev-worker)
+root         156  0.2  0.0  24892  3340 ?        S    11:14   0:00 (udev-worker)
+root         157  0.2  0.0  24892  3340 ?        S    11:14   0:00 (udev-worker)
+systemd+     158  2.4  0.1  21344 12864 ?        Ss   11:14   0:00 /usr/lib/systemd/systemd-resolved
+root         159  0.0  0.0  24892  3344 ?        S    11:14   0:00 (udev-worker)
+systemd+     166  1.7  0.0  91036  7680 ?        Ssl  11:14   0:00 /usr/lib/systemd/systemd-timesyncd
+root         173  0.0  0.0   4240  2688 ?        Ss   11:14   0:00 /usr/sbin/cron -f -P
+message+     174  1.2  0.0   9652  5184 ?        Ss   11:14   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         183  5.4  0.3 2071972 32832 ?       Ssl  11:14   0:00 /usr/lib/snapd/snapd
+root         184  2.0  0.0  17976  8448 ?        Ss   11:14   0:00 /usr/lib/systemd/systemd-logind
+root         187  2.8  0.1 1756368 12288 ?       Ssl  11:14   0:00 /usr/libexec/wsl-pro-service
+root         205  0.2  0.0   3164  1920 hvc0     Ss+  11:14   0:00 /sbin/agetty -o -p -- \u --noclear --keep-baud - 115200,38400,9600 vt220
+syslog       214  1.8  0.0 222516  4992 ?        Ssl  11:14   0:00 /usr/sbin/rsyslogd -n -iNONE
+root         218  6.3  0.4 2236756 44352 ?       Ssl  11:14   0:00 /usr/bin/containerd
+root         220  0.2  0.0   3120  1728 tty1     Ss+  11:14   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+root         221  4.0  0.2 107036 22272 ?        Ssl  11:14   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root         290  2.0  0.0  17292  7296 ?        Ss   11:14   0:00 /usr/lib/systemd/systemd-timedated
+root         298 17.4  0.7 2426400 77952 ?       Ssl  11:14   0:00 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root         549  0.0  0.0   3128   768 ?        Ss   11:15   0:00 /init
+root         551  0.0  0.0   3144   960 ?        S    11:15   0:00 /init
+dxy          555  2.1  0.0   4756  3264 pts/0    Ss+  11:15   0:00 bash /mnt/e/code/3_1_software_system_optimization/A1/evidence/collect_system.sh
+root         558  0.7  0.0   6828  4224 pts/1    Ss   11:15   0:00 /bin/login -f
+dxy          615 19.7  0.1  20452 11328 ?        Ss   11:15   0:00 /usr/lib/systemd/systemd --user
+dxy          616  0.0  0.0  21172  3456 ?        S    11:15   0:00 (sd-pam)
+dxy          640  6.1  0.0   6076  4992 pts/1    S+   11:15   0:00 -bash
+dxy          685  100  0.0   9640  4992 pts/0    R+   11:15   0:00 ps -aux
+
+[exit=0]

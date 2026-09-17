@@ -1,0 +1,16 @@
+uname 0
+sysctl 0
+lscpu 0
+dmidecode 0
+numactl 0
+free 0
+ps 0
+top 0
+htop 0
+vmstat 0
+mpstat 0
+pidstat 0
+iostat 0
+sar 0
+uptime 0
+git 0

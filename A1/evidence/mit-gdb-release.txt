@@ -1,0 +1,9 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Setup
+Running matrix_multiply_run()...
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555554f04 in matrix_multiply_run ()
+#0  0x0000555555554f04 in matrix_multiply_run ()
+#1  0x0000555555554c9e in main ()

@@ -1,0 +1,442 @@
+
+### uname
+UNAME(1)                                  User Commands                                  UNAME(1)
+
+NAME
+       uname - print system information
+
+SYNOPSIS
+       uname [OPTION]...
+
+DESCRIPTION
+       Print certain system information.  With no OPTION, same as -s.
+
+       -a, --all
+              print all information, in the following order, except omit -p and -i if unknown:
+
+       -s, --kernel-name
+              print the kernel name
+
+       -n, --nodename
+              print the network node hostname
+
+       -r, --kernel-release
+              print the kernel release
+
+       -v, --kernel-version
+
+### sysctl
+SYSCTL(8)                             System Administration                             SYSCTL(8)
+
+NAME
+       sysctl - configure kernel parameters at runtime
+
+SYNOPSIS
+       sysctl [options] [variable[=value]] [...]
+       sysctl -p [file or regexp] [...]
+
+DESCRIPTION
+       sysctl is used to modify kernel parameters at runtime.  The parameters available are those
+       listed  under  /proc/sys/.   Procfs  is required for sysctl support in Linux.  You can use
+       sysctl to both read and write sysctl data.
+
+PARAMETERS
+       variable
+              The name of a key to read from.  An example is kernel.ostype.  The '/' separator is
+              also accepted in place of a '.'.
+
+       variable=value
+              To set a key, use the form variable=value where variable is the key  and  value  is
+              the  value  to  set  it  to.   If the value contains quotes or characters which are
+              parsed by the shell, you may need to enclose the value in double quotes.
+
+
+### lscpu
+LSCPU(1)                                  User Commands                                  LSCPU(1)
+
+NAME
+       lscpu - display information about the CPU architecture
+
+SYNOPSIS
+       lscpu [options]
+
+DESCRIPTION
+       lscpu gathers CPU architecture information from sysfs, /proc/cpuinfo and any applicable
+       architecture-specific libraries (e.g. librtas on Powerpc). The command output can be
+       optimized for parsing or for easy readability by humans. The information includes, for
+       example, the number of CPUs, threads, cores, sockets, and Non-Uniform Memory Access (NUMA)
+       nodes. There is also information about the CPU caches and cache sharing, family, model,
+       bogoMIPS, byte order, and stepping.
+
+       The default output formatting on terminal is subject to change and maybe optimized for
+       better readability. The output for non-terminals (e.g., pipes) is never affected by this
+       optimization and it is always in "Field: data\n" format. Use for example "lscpu | less" to
+       see the default output without optimizations.
+
+       In virtualized environments, the CPU architecture information displayed reflects the
+       configuration of the guest operating system which is typically different from the physical
+       (host) system. On architectures that support retrieving physical topology information,
+
+### dmidecode
+DMIDECODE(8)                         System Manager's Manual                         DMIDECODE(8)
+
+NAME
+       dmidecode - DMI table decoder
+
+SYNOPSIS
+       dmidecode [OPTIONS]
+
+DESCRIPTION
+       dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table contents in a hu‐
+       man-readable  format.  This  table  contains a description of the system's hardware compo‐
+       nents, as well as other useful pieces of information such as serial numbers and BIOS revi‐
+       sion. Thanks to this table, you can retrieve this information without having to probe  for
+       the  actual  hardware.   While this is a good point in terms of report speed and safeness,
+       this also makes the presented information possibly unreliable.
+
+       The DMI table doesn't only describe what the system is currently made of, it also can  re‐
+       port  the  possible evolutions (such as the fastest supported CPU or the maximal amount of
+       memory supported).
+
+       SMBIOS stands for System Management BIOS, while DMI stands for Desktop  Management  Inter‐
+       face.  Both  standards  are  tightly related and developed by the DMTF (Desktop Management
+       Task Force).
+
+
+### numactl
+NUMACTL(8)                         Linux Administrator's Manual                        NUMACTL(8)
+
+NAME
+       numactl - Control NUMA policy for processes or shared memory
+
+SYNOPSIS
+       numactl  [  --all  ]  [ --balancing ] [ --interleave nodes ] [ --preferred node ] [ --pre‐
+       ferred-many nodes ] [ --membind nodes ] [ --cpunodebind nodes ] [ --physcpubind cpus  ]  [
+       --localalloc ] [--] command {arguments ...}
+       numactl --show
+       numactl --hardware [--cpu-compress]
+       numactl --version
+       numactl  [  --huge  ]  [  --offset  offset  ]  [ --shmmode shmmode ] [ --length length ] [
+       --strict ]
+       [ --shmid id ] --shm shmkeyfile | --file tmpfsfile
+       [ --touch ] [ --dump ] [ --dump-nodes ] memory policy
+
+DESCRIPTION
+       numactl runs processes with a specific NUMA scheduling or memory  placement  policy.   The
+       policy  is  set  for command and inherited by all of its children.  In addition it can set
+       persistent policy for shared memory segments or files.
+
+       Use -- before command if using command options that could be  confused  with  numactl  op‐
+       tions.
+
+### free
+FREE(1)                                   User Commands                                   FREE(1)
+
+NAME
+       free - Display amount of free and used memory in the system
+
+SYNOPSIS
+       free [options]
+
+DESCRIPTION
+       free displays the total amount of free and used physical and swap memory in the system, as
+       well  as the buffers and caches used by the kernel. The information is gathered by parsing
+       /proc/meminfo. The displayed columns are:
+
+       total  Total usable memory (MemTotal and SwapTotal in /proc/meminfo).  This  includes  the
+              physical and swap memory minus a few reserved bits and kernel binary code.
+
+       used   Used or unavailable memory (calculated as total - available)
+
+       free   Unused memory (MemFree and SwapFree in /proc/meminfo)
+
+       shared Memory used (mostly) by tmpfs (Shmem in /proc/meminfo)
+
+       buffers
+              Memory used by kernel buffers (Buffers in /proc/meminfo)
+
+### ps
+PS(1)                                     User Commands                                     PS(1)
+
+NAME
+       ps - report a snapshot of the current processes.
+
+SYNOPSIS
+       ps [options]
+
+DESCRIPTION
+       ps displays information about a selection of the active processes.  If you want a
+       repetitive update of the selection and the displayed information, use top instead.
+
+       This version of ps accepts several kinds of options:
+
+       1   UNIX options, which may be grouped and must be preceded by a dash.
+       2   BSD options, which may be grouped and must not be used with a dash.
+       3   GNU long options, which are preceded by two dashes.
+
+       Options  of different types may be freely mixed, but conflicts can appear.  There are some
+       synonymous options, which are functionally identical, due to the  many  standards  and  ps
+       implementations that this ps is compatible with.
+
+       By  default,  ps  selects all processes with the same effective user ID (euid=EUID) as the
+       current user and associated with the same  terminal  as  the  invoker.   It  displays  the
+
+### top
+TOP(1)                                    User Commands                                    TOP(1)
+
+NAME
+       top - display Linux processes
+
+SYNOPSIS
+       top [options]
+
+DESCRIPTION
+       The  top  program  provides  a dynamic real-time view of a running system.  It can display
+       system summary information as well as a list  of  processes  or  threads  currently  being
+       managed by the Linux kernel.  The types of system summary information shown and the types,
+       order  and  size of information displayed for processes are all user configurable and that
+       configuration can be made persistent across restarts.
+
+       The program provides a limited interactive interface for process manipulation as well as a
+       much more extensive interface for personal configuration  --  encompassing every aspect of
+       its operation.  And while top is referred to throughout this document,  you  are  free  to
+       name  the  program  anything  you  wish.   That  new name, possibly an alias, will then be
+       reflected on top's display and used when reading and writing a configuration file.
+
+OVERVIEW
+   Documentation
+       The remaining Table of Contents
+
+### htop
+HTOP(1)                                   User Commands                                   HTOP(1)
+
+NAME
+       htop, pcp-htop - interactive process viewer
+
+SYNOPSIS
+       htop [-dCFhpustvH]
+       pcp htop [-dCFhpustvH] [--host/-h host]
+
+DESCRIPTION
+       htop is a cross-platform ncurses-based process viewer.
+
+       It  is  similar to top, but allows you to scroll vertically and horizontally, and interact
+       using a pointing device (mouse).  You can observe all processes  running  on  the  system,
+       along  with  their  command  line arguments, as well as view them in a tree format, select
+       multiple processes and act on them all at once.
+
+       Tasks related to processes (killing, renicing) can be done without entering their PIDs.
+
+       pcp-htop is a version of htop built using the Performance Co-Pilot (PCP) Metrics API  (see
+       PCPIntro(1),  PMAPI(3)), allowing to extend htop to display values from arbitrary metrics.
+       See the section below titled CONFIG FILES for further details.
+
+COMMAND-LINE OPTIONS
+
+### vmstat
+VMSTAT(8)                             System Administration                             VMSTAT(8)
+
+NAME
+       vmstat - Report virtual memory statistics
+
+SYNOPSIS
+       vmstat [options] [delay [count]]
+
+DESCRIPTION
+       vmstat reports information about processes, memory, paging, block IO, traps, disks and cpu
+       activity.
+
+       The  first  report produced gives averages since the last reboot.  Additional reports give
+       information on a sampling period of length delay.  The process and memory reports are  in‐
+       stantaneous in either case.
+
+OPTIONS
+       delay  The delay between updates in seconds.  If no delay is specified, only one report is
+              printed with the average values since boot.
+
+       count  Number  of  updates.   In absence of count, when delay is defined, default is infi‐
+              nite.
+
+       -a, --active
+
+### mpstat
+MPSTAT(1)                              Linux User's Manual                              MPSTAT(1)
+
+NAME
+       mpstat - Report processors related statistics.
+
+SYNOPSIS
+       mpstat  [  -A ] [ --dec={ 0 | 1 | 2 } ] [ -n ] [ -u ] [ -T ] [ -V ] [ -I { keyword[,...] |
+       ALL } ] [ -N { node_list | ALL } ] [ -o JSON ] [ -P { cpu_list | ALL  }  ]  [  interval  [
+       count ] ]
+
+DESCRIPTION
+       The  mpstat  command  writes  to  standard output activities for each available processor,
+       processor 0 being the first one.  Global average activities among all processors are  also
+       reported.   The mpstat command can be used on both SMP and UP machines, but in the latter,
+       only global average activities will be printed. If no activity has been selected, then the
+       default report is the CPU utilization report.
+
+       The interval parameter specifies the amount of time in seconds  between  each  report.   A
+       value  of  0  (or no parameters at all) indicates that processors statistics are to be re‐
+       ported for the time since system startup (boot). The count parameter can be  specified  in
+       conjunction with the interval parameter if this one is not set to zero. The value of count
+       determines  the number of reports generated at interval seconds apart. If the interval pa‐
+       rameter is specified without the count parameter, the  mpstat  command  generates  reports
+       continuously.
+
+### pidstat
+PIDSTAT(1)                             Linux User's Manual                             PIDSTAT(1)
+
+NAME
+       pidstat - Report statistics for Linux tasks.
+
+SYNOPSIS
+       pidstat [ -d ] [ -H ] [ -h ] [ -I ] [ -l ] [ -R ] [ -r ] [ -s ] [ -t ] [ -U [ username ] ]
+       [  -u  ]  [  -V  ] [ -v ] [ -w ] [ -C comm ] [ -G process_name ] [ --dec={ 0 | 1 | 2 } ] [
+       --human ] [ -p { pid[,...]  | SELF | ALL } ] [ -T { TASK | CHILD | ALL } ]  [  interval  [
+       count ] ] [ -e program args ]
+
+DESCRIPTION
+       The pidstat command is used for monitoring individual tasks currently being managed by the
+       Linux kernel.  It writes to standard output activities for every task selected with option
+       -p  or  for every task managed by the Linux kernel if option -p ALL has been used. Not se‐
+       lecting any tasks is equivalent to specifying -p ALL but only  active  tasks  (tasks  with
+       non-zero statistics values) will appear in the report.
+
+       The pidstat command can also be used for monitoring the child processes of selected tasks.
+       Read about option -T below.
+
+       The  interval  parameter  specifies  the amount of time in seconds between each report.  A
+       value of 0 (or no parameters at all) indicates that tasks statistics are  to  be  reported
+       for the time since system startup (boot). The count parameter can be specified in conjunc‐
+
+### iostat
+IOSTAT(1)                              Linux User's Manual                              IOSTAT(1)
+
+NAME
+       iostat  -  Report Central Processing Unit (CPU) statistics and input/output statistics for
+       devices and partitions.
+
+SYNOPSIS
+       iostat [ -c ] [ -d ] [ -h ] [ -k | -m ] [ -N ] [ -s ] [ -t ] [ -V ] [ -x ] [ -y ] [ -z ] [
+       --compact ] [ --dec={ 0 | 1 | 2 } ] [ { -f | +f } directory ] [ -j { ID | LABEL |  PATH  |
+       UUID  |  ...  } ] [ -o JSON ] [ [ -H ] -g group_name ] [ --human ] [ --pretty ] [ -p [ de‐
+       vice[,...] | ALL ] ] [ device [...] | ALL ] [ interval [ count ] ]
+
+DESCRIPTION
+       The iostat command is used for monitoring system input/output device loading by  observing
+       the  time  the  devices are active in relation to their average transfer rates. The iostat
+       command generates reports that can be used to change system configuration to  better  bal‐
+       ance the input/output load between physical disks.
+
+       The  first  report generated by the iostat command provides statistics concerning the time
+       since the system was booted, unless the -y option is used (in this case, this first report
+       is omitted).  Each subsequent report covers the time since the previous report.  All  sta‐
+       tistics  are  reported  each  time the iostat command is run. The report consists of a CPU
+       header row followed by a row of CPU statistics. On multiprocessor systems, CPU  statistics
+       are  calculated  system-wide as averages among all processors. A device header row is dis‐
+
+### sar
+SAR(1)                                 Linux User's Manual                                 SAR(1)
+
+NAME
+       sar - Collect, report, or save system activity information.
+
+SYNOPSIS
+       sar [ -A ] [ -B ] [ -b ] [ -C ] [ -D ] [ -d ] [ -F [ MOUNT ] ] [ -H ] [ -h ] [ -p ] [ -r [
+       ALL ] ] [ -S ] [ -t ] [ -u [ ALL ] ] [ -V ] [ -v ] [ -W ] [ -w ] [ -y ] [ -z ] [ --dec={ 0
+       |  1  |  2  }  ]  [  --dev=dev_list  ]  [  --fs=fs_list  ]  [  --help  ]  [  --human  ]  [
+       --iface=iface_list ] [ --int=int_list ] [ --pretty ] [ --sadc ] [ -I [ SUM | ALL ] ] [  -P
+       {  cpu_list | ALL } ] [ -m { keyword[,...] | ALL } ] [ -n { keyword[,...] | ALL } ] [ -q [
+       keyword[,...] | ALL ] ] [ -j { SID | ID | LABEL | PATH | UUID | ... } ] [ -f [ filename  ]
+       |  -o [ filename ] | -[0-9]+ ] [ -i interval ] [ -s [ hh:mm[:ss] ] ] [ -e [ hh:mm[:ss] ] ]
+       [ interval [ count ] ]
+
+DESCRIPTION
+       The sar command writes to standard output the contents  of  selected  cumulative  activity
+       counters  in the operating system. The accounting system, based on the values in the count
+       and interval parameters, writes information the specified number of times  spaced  at  the
+       specified intervals in seconds.  If the interval parameter is set to zero, the sar command
+       displays the average statistics for the time since the system was started. If the interval
+       parameter  is  specified  without the count parameter, then reports are generated continu‐
+       ously.  The collected data can also be saved in the file  specified  by  the  -o  filename
+       flag, in addition to being displayed onto the screen. If filename is omitted, sar uses the
+
+### uptime
+UPTIME(1)                                 User Commands                                 UPTIME(1)
+
+NAME
+       uptime - Tell how long the system has been running.
+
+SYNOPSIS
+       uptime [options]
+
+DESCRIPTION
+       uptime  gives a one line display of the following information.  The current time, how long
+       the system has been running, how many users are currently logged on, and the  system  load
+       averages for the past 1, 5, and 15 minutes.
+
+       This is the same information contained in the header line displayed by w(1).
+
+       System  load  averages is the average number of processes that are either in a runnable or
+       uninterruptable state.  A process in a runnable state is either using the CPU  or  waiting
+       to  use  the  CPU.   A process in uninterruptable state is waiting for some I/O access, eg
+       waiting for disk.  The averages are taken over the three time  intervals.   Load  averages
+       are not normalized for the number of CPUs in a system, so a load average of 1 means a sin‐
+       gle  CPU system is loaded all the time while on a 4 CPU system it means it was idle 75% of
+       the time.
+
+OPTIONS
+
+### lstopo
+LSTOPO(1)                                     hwloc                                     LSTOPO(1)
+
+NAME
+       lstopo, lstopo-no-graphics, hwloc-ls - Show the topology of the system
+
+SYNOPSIS
+       lstopo [ options ]... [ filename ]
+
+       lstopo-no-graphics [ options ]... [ filename ]
+
+       hwloc-ls [ options ]... [ filename ]
+
+       Note  that hwloc(7) provides a detailed explanation of the hwloc system; it should be read
+       before reading this man page
+
+OPTIONS
+       --of <format>, --output-format <format>
+              Enforce the output in the given format.  See the OUTPUT FORMATS section below.
+
+       -i <path>, --input <path>
+              Read the topology from <path> instead of discovering the topology of the local  ma‐
+              chine.
+
+              If <path> is a file, it may be a XML file exported by a previous hwloc program.  If
+
+### git
+GIT(1)                                      Git Manual                                     GIT(1)
+
+NAME
+       git - the stupid content tracker
+
+SYNOPSIS
+       git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
+
+DESCRIPTION
+       Git is a fast, scalable, distributed revision control system with an unusually rich
+       command set that provides both high-level operations and full access to internals.
+
+       See gittutorial(7) to get started, then see giteveryday(7) for a useful minimum set of
+       commands. The Git User’s Manual[1] has a more in-depth introduction.
+
+       After you mastered the basic concepts, you can come back to this page to learn what
+       commands Git offers. You can learn more about individual Git commands with "git help
+       command". gitcli(7) manual page gives you an overview of the command-line command syntax.
+
+       A formatted and hyperlinked copy of the latest Git documentation can be viewed at

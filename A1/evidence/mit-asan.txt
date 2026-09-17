@@ -1,0 +1,19 @@
+Setup
+Running matrix_multiply_run()...
+
+=================================================================
+==674==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 48 byte(s) in 3 object(s) allocated from:
+    #0 0x5fa6728eafc3 in malloc (/mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply+0xcafc3) (BuildId: ace6def2e60e8583beb3cf7c4804f1aab27e30ba)
+    #1 0x5fa67292a159 in make_matrix /mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply.c:39:24
+
+Indirect leak of 192 byte(s) in 12 object(s) allocated from:
+    #0 0x5fa6728eafc3 in malloc (/mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply+0xcafc3) (BuildId: ace6def2e60e8583beb3cf7c4804f1aab27e30ba)
+    #1 0x5fa67292a1e7 in make_matrix /mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply.c:48:35
+
+Indirect leak of 96 byte(s) in 3 object(s) allocated from:
+    #0 0x5fa6728eafc3 in malloc (/mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply+0xcafc3) (BuildId: ace6def2e60e8583beb3cf7c4804f1aab27e30ba)
+    #1 0x5fa67292a1a2 in make_matrix /mnt/e/code/3_1_software_system_optimization/A1/homework1/matrix-multiply/matrix_multiply.c:46:31
+
+SUMMARY: AddressSanitizer: 336 byte(s) leaked in 18 allocation(s).

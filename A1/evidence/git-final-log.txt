@@ -1,0 +1,3 @@
+0608bb0 丁熙妍 <10234500007@stu.ecnu.edu.cn> chore: ignore practice image
+d301aaa 丁熙妍 <10234500007@stu.ecnu.edu.cn> chore: add practice image
+7529398 丁熙妍 <10234500007@stu.ecnu.edu.cn> docs: add practice readme

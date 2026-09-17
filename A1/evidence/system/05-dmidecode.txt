@@ -1,0 +1,6 @@
+$ dmidecode
+# dmidecode 3.5
+Scanning /dev/mem for entry point.
+Can't read memory from /dev/mem
+
+[exit=1]

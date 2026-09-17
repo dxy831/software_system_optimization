@@ -1,0 +1,19 @@
+$ bash -lc sysctl\ kernel.ostype\ kernel.osrelease\;\ sysctl\ -a\ 2\>/dev/null\ \|\ grep\ -E\ \"\^kernel\\.\(perf_\|sched_\)\"\ \|\ head\ -n\ 20
+kernel.ostype = Linux
+kernel.osrelease = 6.6.87.2-microsoft-standard-WSL2
+kernel.perf_cpu_time_max_percent = 25
+kernel.perf_event_max_contexts_per_stack = 8
+kernel.perf_event_max_sample_rate = 100000
+kernel.perf_event_max_stack = 127
+kernel.perf_event_mlock_kb = 516
+kernel.perf_event_paranoid = 2
+kernel.sched_cfs_bandwidth_slice_us = 5000
+kernel.sched_child_runs_first = 0
+kernel.sched_deadline_period_max_us = 4194304
+kernel.sched_deadline_period_min_us = 100
+kernel.sched_rr_timeslice_ms = 100
+kernel.sched_rt_period_us = 1000000
+kernel.sched_rt_runtime_us = 950000
+kernel.sched_schedstats = 0
+
+[exit=0]

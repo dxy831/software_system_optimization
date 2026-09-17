@@ -1,0 +1,13 @@
+$ timeout 4 pidstat 1
+Linux 6.6.87.2-microsoft-standard-WSL2 (ddd) 	09/17/26 	_x86_64_	(24 CPU)
+
+11:15:11      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+
+11:15:12      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:15:13        0       218    0.00    1.00    0.00    0.00    1.00     0  containerd
+
+11:15:13      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:15:14        0        96    2.00    0.00    0.00    0.00    2.00    18  systemd-udevd
+11:15:14     1000       695    1.00    0.00    0.00    0.00    1.00    18  pidstat
+
+[exit=124]
