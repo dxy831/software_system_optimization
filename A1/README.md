@@ -1,53 +1,56 @@
-# 上机作业 A1：初试环境和工具
+# A1：初试环境和工具
 
-学号：10234500007  
-姓名：丁熙妍
-
-## 系统信息
-
-- 操作系统：Ubuntu 24.04 LTS，运行在 Windows 宿主机的 WSL2 中。
-- CPU：WSL2 中显示 AMD Ryzen 9 8940HX with Radeon Graphics，12 个 Core、每 Core 2 个硬件线程，共 24 个逻辑 CPU。
-- 内存：当前 WSL2 可见内存约 9.7 GiB。
+学号：10234500007　姓名：丁熙妍
 
 ## 1. 环境搭建和工具安装
 
-| 项目 | 本机版本 | 课程要求 |
-| --- | --- | --- |
-| Ubuntu / Kernel | Ubuntu 24.04 LTS / Linux 6.6 | Ubuntu 20.04 LTS / 5.4+ |
-| GCC / Clang | 13.3 / 18.1 | 9.3+ / 10.0+ |
-| Python / Java | 3.12 / OpenJDK 21.0 | 3.8+ / 11+ |
-| Valgrind / perf | 3.22 / 6.6 | 3.17+ / 5.4+ |
-| OpenCilk | 已安装；所附 OpenCilk 编译器为 Clang 19.1，`-fopencilk` 编译检查通过 | 1.0+ |
+操作系统：Ubuntu 24.04 LTS，运行于 Windows 宿主机的 WSL2。  
+CPU：AMD Ryzen 9 8940HX with Radeon Graphics。  
+内存：WSL2 当前可见约 9.7 GiB。
+
+| 工具 | 本机版本或检查结果 |
+| --- | --- |
+| Linux 内核 | 6.6 |
+| GCC / Clang | 13.3 / 18.1 |
+| Python / OpenJDK | 3.12 / 21.0 |
+| Valgrind / perf | 3.22 / 6.6 |
+| OpenCilk | 所附编译器报告 Clang 19.1；`-fopencilk` 编译检查通过，OpenCilk 发行版号未单独确认 |
 
 ## 2. 常用工具命令操作练习
 
 ### (1) `uname -a`
 
-**a.** 输出依次包含内核名称、主机名、内核发行号、构建信息、架构和操作系统名称。本次输出为 `Linux ddd 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun 5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux`。
+**a.** 输出包含内核名称、主机名、内核发行号、构建信息、机器架构、处理器类型、硬件平台和操作系统名称。其中 `Linux` 是内核名称，`ddd` 是主机名；`SMP` 和 `PREEMPT_DYNAMIC` 属于内核构建信息。这条命令主要说明正在运行的内核和平台，Ubuntu 的发行版信息需要另看 `/etc/os-release`。
+
+**b.** 本次内核发行号为 `6.6.87.2-microsoft-standard-WSL2`，指令集架构为 `x86_64`。
 
 ![uname 输出](images/01-uname-full.png)
 
-**b.** Linux 内核发行号为 `6.6.87.2-microsoft-standard-WSL2`；指令集架构为 `x86_64`。
-
 ### (2) `cat /etc/os-release`
 
-**a.** 本机发行版名称 `NAME=Ubuntu`，完整名称 `PRETTY_NAME=Ubuntu 24.04.5 LTS`，版本标识 `VERSION_ID=24.04`，完整版本 `VERSION=24.04.5 LTS (Noble Numbat)`，代号 `VERSION_CODENAME=noble`。`ID=ubuntu` 是发行版标识，`ID_LIKE=debian` 表示其所属发行版家族；文件还给出支持、报错等网址。
+**a.** 文件记录 Ubuntu 的发行版信息。`NAME` 和 `PRETTY_NAME` 给出名称，`VERSION_ID` 和 `VERSION` 给出版本，`VERSION_CODENAME` 给出发行代号；本次分别可以读到 Ubuntu、24.04.5 LTS 和 `noble`。`ID=ubuntu` 用于标识发行版，`ID_LIKE=debian` 表示其所属发行版家族，其余网址用于获取帮助或报告问题。
+
+这里的 Ubuntu 版本与上一题的 Linux 内核版本不是同一层信息，因此两个版本号不同并不矛盾。
 
 ![/etc/os-release 输出](images/02-os-release.png)
 
 ### (3) `sysctl -a`
 
-**a.** `sysctl` 读取或设置内核运行参数；`-a` 列出当前可见的全部参数及其值。
+**a.** `sysctl` 用于读取或设置内核运行参数，`-a` 列出当前可见的参数及其值。
 
 ![sysctl 输出节选](images/03-sysctl.png)
 
-**b.** 大量 `sysctl` 键映射到 `/proc/sys` 中的文件，例如 `kernel.ostype` 对应 `/proc/sys/kernel/ostype`。点分隔键名对应目录层级。
+**b.** 参数对应 `/proc/sys` 下的文件。例如 `kernel.ostype` 对应 `/proc/sys/kernel/ostype`，键名中的点对应目录分隔。这两种方式是在查看同一个内核参数，而不是两套独立配置。
 
-**c.** `kernel.ostype = Linux`、`kernel.osrelease = 6.6.87.2-microsoft-standard-WSL2`，与 `uname -a` 中的内核名称和发行号一致。`/etc/os-release` 显示的 Ubuntu 24.04.5 是发行版版本。
+**c.** `kernel.ostype=Linux`、`kernel.osrelease=6.6.87.2-microsoft-standard-WSL2`，与 `uname -a` 中的内核名称和发行号一致。`/etc/os-release` 记录的是 Ubuntu 发行版信息，不能直接把其中的 24.04.5 与内核发行号比较。
 
 ![内核名称和发行号](images/03-kernel-keys.png)
 
-**d.** `kernel.perf_event_max_sample_rate = 100000` 限制 perf 采样事件的最大采样频率；`kernel.sched_rr_timeslice_ms = 100` 规定 SCHED_RR 实时调度策略的轮转时间片，单位毫秒。
+**d.** 选择以下两个参数：
+
+`kernel.perf_event_max_sample_rate=100000` 表示 perf 采样事件允许的最大采样频率。这是采样频率的上限，不表示当前已经按该频率采样。
+
+`kernel.sched_rr_timeslice_ms=100` 表示 SCHED_RR 实时调度策略的轮转时间片为 100 毫秒。它针对该实时调度策略，不是所有普通进程统一使用的时间片。
 
 ![perf 参数](images/03-kernel-perf.png)
 
@@ -55,116 +58,133 @@
 
 ### (4) `lscpu`
 
-**a.** 型号为 AMD Ryzen 9 8940HX with Radeon Graphics。WSL2 中显示 `Socket(s)=1`、`Core(s) per socket=12`、`Thread(s) per core=2`，对应 12 个 Core、24 个逻辑 CPU，每核两个硬件线程。基准、最大和最小频率在 `lscpu` 输出中均未显示。缓存为 L1d 384 KiB（12 个实例，每核 32 KiB）、L1i 384 KiB（12 个实例，每核 32 KiB）、L2 12 MiB（12 个实例，每核 1 MiB）、L3 32 MiB（1 个实例）；前三项显示的是各实例容量之和。
+**a.** 型号为 AMD Ryzen 9 8940HX with Radeon Graphics。WSL2 报告 1 个插槽、每插槽 12 个 Core、每 Core 2 个硬件线程，共 24 个逻辑 CPU。这里能确认的是 WSL2 可见的拓扑，不能直接把它当成宿主机的完整物理拓扑。基准、最大和最小频率均未在本次输出中显示。
+
+缓存显示为 L1d 384 KiB、L1i 384 KiB、L2 12 MiB，三者各有 12 个实例；对应每个实例分别为 32 KiB、32 KiB、1 MiB。L3 为 32 MiB，共 1 个实例。因此，不能把 L1d 的 384 KiB 误当成单核 L1d 容量。
 
 ![CPU 型号、线程与地址宽度](images/04-lscpu-full.png)
 
 ![CPU 缓存](images/04-lscpu-cache.png)
 
-**b.** `Byte Order: Little Endian`，本机为小端序。网络协议通常使用大端的网络字节序，这是大端序的应用场景。
+**b.** 本机为小端序。网络字节序采用大端表示，是大端序的一个应用场景。
 
-**c.** `Address sizes` 中的 physical 和 virtual 分别是物理地址与虚拟地址宽度。本机两者均为 48 位；64 位架构的地址宽度取决于处理器实现及虚拟化环境。
+**c.** `physical` 表示物理地址宽度，`virtual` 表示虚拟地址宽度，本次均为 48 位。64 位架构并不要求物理地址和虚拟地址都用满 64 位，实际支持的地址位数取决于处理器实现和虚拟环境。指针占多少字节与其中有多少有效地址位，是两个不同的问题。
 
 ### (5) `dmidecode`
 
-**a.** `dmidecode` 读取 SMBIOS/DMI 固件表中的硬件配置。
+**a.** `dmidecode` 读取并解码 SMBIOS/DMI 固件表，用于查看硬件配置。
 
-**b.** 在直接暴露相应信息的机器上，内存条条目通常可给出插槽、容量、类型、速率、制造商、序列号等。本机普通用户执行提示不能读取 `/dev/mem`；以 root 再次执行得到 `No SMBIOS nor DMI entry point found`。当前 WSL2 未提供内存条 DMI 信息。
+**b.** 内存条条目通常能给出插槽、容量、类型、速率、制造商、序列号等信息。
+
+本次普通用户执行时提示无法读取 `/dev/mem`，这时还不能排除权限不足。以 root 再次执行后，提示变为 `No SMBIOS nor DMI entry point found`。因此，本次 WSL2 没有提供可用的 SMBIOS/DMI 入口，无法据此列出宿主机内存条的具体信息。
 
 ![普通用户执行 dmidecode](images/05-dmidecode.png)
 
 ![root 执行 dmidecode](images/05-dmidecode-root.png)
 
-
 ### (6) `numactl -H` 与 `numactl --show`
 
-**a.** `numactl` 查看或设置进程的 NUMA 绑定和内存策略；`-H`（hardware）列出当前可见的 NUMA 硬件拓扑。
+**a.** `numactl` 用于查看或设置进程的 NUMA 策略和绑定。`-H` 是 `--hardware`，显示系统可见的 NUMA 节点、CPU、内存和节点距离。
 
-**b.** `numactl -H` 显示 `available: 1 nodes (0)`，节点 0 有逻辑 CPU 0–23；采样时节点内存约 9942 MB。
+**b.** 本次只有 1 个节点，即节点 0；其中包含逻辑 CPU 0–23。
 
-**c.** `node distances` 表示节点间访存成本的相对值，通常本地节点值较小。本机只有节点 0，到自身的距离为 10；在多节点机器上，数据库和并行计算的跨节点访存可能受距离影响。
+**c.** `node distances` 表示节点间访问成本的相对值。本次节点 0 到自身的距离为 10，没有远端节点可供比较。在多节点机器上，数据库和内存访问密集的并行程序可能因跨节点访存而受到影响。当前只有一个可见节点，不能据此比较本地和远端访存的性能差别。
 
 ![NUMA 节点与距离](images/06-numactl-h.png)
 
-**d.** `numactl --show` 显示当前进程的 NUMA 策略和绑定：`policy: default`、`preferred node: current`、`physcpubind: 0 ... 23`、`cpubind: 0`、`nodebind: 0`、`membind: 0`。进程可用的逻辑 CPU 为 0–23，CPU 和内存节点均为 0。`-H` 显示系统节点及距离，`--show` 显示进程当前的策略和绑定。
+**d.** `numactl --show` 查看执行该命令的进程当前使用的 NUMA 策略和绑定。
+
+本次 `policy: default` 表示使用默认内存策略，`preferred node: current` 显示当前节点。`physcpubind: 0 ... 23` 给出进程可使用的逻辑 CPU；`cpubind`、`nodebind` 显示的 CPU 节点均为 0，`membind` 显示的内存节点范围也只有 0。节点字段为 0 不表示只允许使用编号为 0 的逻辑 CPU。
+
+两条命令的区别在于观察对象：`-H` 回答系统有哪些节点和资源，`--show` 回答当前进程可以使用哪些资源、采用什么策略。
 
 ![当前 NUMA 策略](images/06-numactl-show.png)
 
 ### (7) `free -h`
 
-**a.** `Mem` 行给出内存总量、已用、空闲、共享、缓存和可用量。本次样本为总量 9.7 GiB、已用 639 MiB、空闲 8.7 GiB、`buff/cache` 600 MiB、`available` 9.1 GiB；`available` 是估计可供新程序使用的内存。`Swap` 行为总量 8.0 GiB、已用 0 B、空闲 8.0 GiB。
+**a.** `Mem` 行描述内存：`total` 是总量，`used` 是已用量，`free` 是未使用量，`shared` 是共享内存占用，`buff/cache` 是缓冲和缓存，`available` 是估计可供新程序使用的内存。本次可见总量约 9.7 GiB，`available` 约 9.1 GiB。
+
+判断还能使用多少内存时，不能只看 `free`，因为一部分缓存可以回收，`available` 更适合回答这个问题。`Swap` 行描述交换空间，本次总量 8.0 GiB，已用 0 B，表示采样时尚未使用交换空间。
 
 ![free -h 输出](images/07-free.png)
 
-**b.** `GiB = 2^30` 字节，`GB = 10^9` 字节；二者数值基准不同。
+**b.** `GiB = 2^30` 字节，`GB = 10^9` 字节。同一容量用这两种单位表示时，数字不同，并不代表容量发生了变化。
 
 ### (8) `ps -aux`
 
-**a.** 表头有 `USER`（用户）、`PID`（进程号）、`%CPU`（进程 CPU 百分比）、`%MEM`（进程驻留内存相对物理内存的比例）、`VSZ`（虚拟地址空间大小，KiB）、`RSS`（驻留物理内存，KiB）、`TTY`（关联终端，`?` 表示无终端）、`STAT`（状态及附加标记）、`START`（启动时间）、`TIME`（累计 CPU 时间）、`COMMAND`（启动命令）。样本中的 PID 1 是 `/sbin/init`。`ps` 显示的是执行时的进程快照。
+**a.** `USER` 是进程用户，`PID` 是进程号；`%CPU` 表示 CPU 使用比例，`%MEM` 表示驻留内存占系统物理内存的比例。`VSZ` 是虚拟内存大小，`RSS` 是驻留物理内存大小，单位均为 KiB。
+
+`TTY` 是关联终端，`?` 表示无关联终端；`STAT` 是进程状态及附加标记，`START` 是启动时间，`TIME` 是累计使用的 CPU 时间，`COMMAND` 是启动命令。`TIME` 不等于进程已经存活的时间，因为进程等待或休眠时并不会持续消耗 CPU。
+
+`ps` 给出执行命令时的进程快照，不会像 `top` 一样持续刷新。
 
 ![ps -aux 输出节选](images/08-ps.png)
 
 ### (9) `top` 与 `htop`
 
-**a.** `top` 首行显示当前时间、运行时长、登录用户数和最近 1、5、15 分钟 load average；`Tasks` 显示进程总数及运行、休眠、停止、僵尸数。`%Cpu(s)` 中 `us` 是用户态、`sy` 是内核态、`ni` 是调整过 nice 值的用户态进程占用、`id` 是空闲、`wa` 是 I/O 等待，`hi/si` 是硬/软中断，`st` 是虚拟机被宿主机占用的时间。`MiB Mem`、`MiB Swap` 分别显示内存和交换空间的总量、空闲及使用情况。进程表中的 PID、USER、PR、NI、VIRT、RES、SHR、S、`%CPU`、`%MEM`、`TIME+`、COMMAND 分别对应进程标识、用户、优先级、nice 值、虚拟/驻留/共享内存、状态、CPU/内存占比、累计 CPU 时间和命令。
+**a.** `top` 顶部首行给出当前时间、系统运行时长、登录用户数和最近 1、5、15 分钟的平均负载。`Tasks` 给出进程总数及运行、休眠、停止、僵尸进程数。
 
-![top 命令输出](images/09-top-batch.png)
+`%Cpu(s)` 中，`us` 是普通用户态时间，`sy` 是内核态时间，`ni` 是调整过 nice 值的用户态任务占用，`id` 是空闲时间，`wa` 是 I/O 等待时间，`hi`、`si` 分别是硬中断和软中断处理时间，`st` 是虚拟 CPU 未获得宿主机 CPU 执行机会的时间比例。`MiB Mem` 和 `MiB Swap` 分别显示内存及交换空间的总量和使用情况，内存部分还包括缓冲、缓存及可用量。
 
-![在终端输入 top](images/09-top-entered.png)
+进程表中，`PID`、`USER` 是进程号和用户；`PR`、`NI` 是调度优先级和 nice 值；`VIRT`、`RES`、`SHR` 是虚拟、驻留和共享内存；`S` 是状态；`%CPU`、`%MEM` 是 CPU 和内存占比；`TIME+` 是累计 CPU 时间；`COMMAND` 是命令。顶部 CPU 汇总反映整体使用情况，进程行反映单个进程，不能把两者直接当成同一个百分比。
 
 ![top 交互界面](images/09-top-interactive.png)
 
-**b.** 两者都实时刷新。`htop` 显示各逻辑 CPU 的条形图，并提供搜索、排序、树形视图和功能键操作；`top` 以文字汇总和进程表为主，也支持交互调整显示。
-
-![在终端输入 htop](images/09-htop-entered.png)
+**b.** 两者都能持续查看进程和资源使用情况。`htop` 用条形图展示各逻辑 CPU，搜索、排序、树形视图和进程选择更直观；`top` 以系统摘要和进程表为主，也支持交互操作。前者更方便同时观察多核和多个进程，后者便于查看紧凑的系统概况。
 
 ![htop 交互界面](images/09-htop-interactive.png)
 
 ### (10)–(13) 性能统计命令
 
-（10）`vmstat 1`
+(10) `vmstat 1`
 
 ![vmstat 采样](images/10-vmstat.png)
 
-（11）`mpstat -P ALL 1`
+(11) `mpstat -P ALL 1`
 
 ![mpstat 采样](images/11-mpstat.png)
 
-（12）`pidstat 1`
+(12) `pidstat 1`
 
 ![pidstat 采样](images/12-pidstat.png)
 
-（13）`iostat -xz 1`
+(13) `iostat -xz 1`
 
 ![iostat 采样](images/13-iostat.png)
 
-**a.** 四条命令中的 `1` 均表示每隔 1 秒采样一次。`vmstat` 和 `iostat` 的首批数据是自系统启动以来的平均值，后续数据反映相邻采样间隔。
+**a.** 参数 `1` 表示统计更新的间隔为 1 秒，不是只输出一次。`vmstat` 首份报告中的 CPU 等统计、`iostat` 的首份报告反映自启动以来的情况，后续报告反映相邻采样间隔；`vmstat` 的进程和内存数据则始终是即时状态。
 
-**b.** `vmstat` 统计可运行/阻塞进程、内存、交换、块 I/O、系统中断与上下文切换，以及 CPU 时间分布。`mpstat` 统计整体及每个逻辑 CPU 的用户态、系统态、I/O 等待和空闲等比例；本机样本显示 24 个逻辑 CPU。`pidstat` 统计进程或任务在采样间隔内的 CPU 使用，包括 `%usr`、`%system` 和运行所在 CPU 等字段。`iostat` 统计 CPU 总览和块设备的吞吐、请求率、等待时间、队列和设备利用率；本机可见 `sda`–`sdd` 等 WSL2 设备。
+**b.** `vmstat` 从整体上观察进程、内存、交换、块 I/O、系统活动和 CPU；`mpstat -P ALL` 将 CPU 使用情况细分到各逻辑 CPU；`pidstat` 按进程或任务统计 CPU 使用；`iostat -xz` 查看块设备吞吐、等待时间、队列和利用率等扩展统计。
 
-**c.** `ps -aux` 的 `%CPU` 是快照中按进程累计 CPU 时间和存活时长计算的占比；`pidstat` 的 `%CPU` 反映采样间隔内某进程的 CPU 使用；`top/htop` 按刷新周期更新进程 CPU 使用率，界面还提供整机或各核负载。因此同一进程在不同时间、统计窗口和多核显示模式下数值可能不同；`top` 顶部的整机 `%Cpu(s)` 与单个进程的 `%CPU` 观察对象不同。
+它们关注的层次不同：查看系统整体状态用 `vmstat`，区分哪个逻辑 CPU 忙用 `mpstat`，查哪个进程占用 CPU 用 `pidstat`，分析块设备 I/O 用 `iostat`。
+
+**c.** `ps -aux` 的 `%CPU` 按进程累计 CPU 时间与存活时长计算；`pidstat 1` 反映采样间隔内的 CPU 使用，`top/htop` 则按刷新周期更新。因此，一个进程刚开始繁忙时，短时采样可能已经显示较高占用，而 `ps` 的长期平均仍较低。比较结果时，需要对应同一进程、相近时间窗口，并注意整机、单核和单进程百分比的区别。
 
 ### (14) `sar -n DEV 1`
 
 **a.** `1` 表示每隔 1 秒输出一轮网络设备统计。
 
-**b.** `-n DEV` 按网络接口给出收发包速率 `rxpck/s`、`txpck/s`，收发数据速率 `rxkB/s`、`txkB/s`，压缩包速率 `rxcmp/s`、`txcmp/s`，接收组播包速率 `rxmcst/s` 和接口利用率 `%ifutil`。本次可见 `lo`、`eth0`、`docker0`；所截图的采样轮次这些指标均为 0，表示该短时间窗口内没有记录到对应流量。
+**b.** `-n DEV` 按网络接口统计收发情况：`rxpck/s`、`txpck/s` 是收发包速率，`rxkB/s`、`txkB/s` 是收发数据速率，`rxcmp/s`、`txcmp/s` 是压缩包速率，`rxmcst/s` 是接收组播包速率，`%ifutil` 是接口利用率。
+
+本次显示 `lo`、`eth0`、`docker0`，截图中的采样轮次各项均为 0。这只能说明该短时间窗口内没有记录到对应流量，不能说明这些接口始终没有通信。
 
 ![sar 网络设备采样](images/14-sar.png)
 
 ### (15) `uptime`
 
-**①** 截图样本为 `12:23:58 up 11 min, 1 user, load average: 0.16, 0.05, 0.01`，依次是当前时间、运行时长、登录用户数和三个平均负载值。
+**①** 输出依次为当前时间、系统运行时长、登录用户数和三个平均负载值。本次采样时系统已运行 11 分钟，有 1 个登录用户，三个负载值为 0.16、0.05、0.01。
 
 ![uptime 输出](images/15-uptime.png)
 
-**②** 三个负载值依次对应最近 1、5、15 分钟，反映可运行及不可中断等待任务的平均数量。负载以任务数计量；本机有 24 个逻辑 CPU。
+**②** 三个值分别对应最近 1、5、15 分钟，反映可运行及不可中断等待任务的平均数量。它以任务数计量，不是 CPU 利用率百分比。即使 CPU 没有满载，处于不可中断等待的任务也会影响负载，因此判断系统是否繁忙还应结合 CPU 和 I/O 状态。
 
 ### (16) `/proc/interrupts` 与 `/proc/softirqs`
 
-**a.** `/proc/interrupts` 按 CPU 列出各 IRQ/中断类别的累计计数及设备信息；`/proc/softirqs` 按 CPU 列出 TIMER、NET_RX、SCHED、RCU 等软中断类别的累计计数。
+**a.** `/proc/interrupts` 按 CPU 列出 IRQ 及其他中断类别的累计计数和相关说明；`/proc/softirqs` 按 CPU 列出 RCU、SCHED、TIMER、NET_RX 等软中断类别的累计计数。这些是累计次数，不是每秒发生率。
 
-**b.** [完整统计快照](evidence/interrupts-totals.txt)中，设备 IRQ 以 `25: virtio0-virtqueues` 最多，合计 4223 次；其他中断类别中，`CAL` 为 269027 次，`HVS` 为 216119 次。软中断以 `RCU` 最多，合计 122262 次，其次是 `SCHED` 的 99640 次和 `TASKLET` 的 95092 次。`CAL` 对应核间函数调用，`HVS` 对应 Hyper-V 计时器，`RCU` 与内核读侧同步维护有关。
+**b.** 对保存的 12:49:55 完整快照按 CPU 求和，带数字编号的设备 IRQ 中，`25: virtio0-virtqueues` 最多，为 4223 次。把其他中断类别也计入时，`CAL` 为 269027 次，高于 `HVS` 的 216119 次。软中断中 `RCU` 最多，为 122262 次，其次是 `SCHED` 的 99640 次和 `TASKLET` 的 95092 次。
+
+`CAL` 对应核间函数调用，`HVS` 对应 Hyper-V 计时器，`RCU` 与内核同步维护有关。这些计数可能受到内核调度、同步和虚拟设备活动影响，不能只根据一次累计快照确定唯一原因。这里统计的是 WSL2 可见的中断，也不代表宿主机全部物理设备的中断情况。下方截图是较早时刻的输出节选，与上述完整快照的计数不同。
 
 ![硬中断计数节选](images/16-interrupts.png)
 
@@ -172,73 +192,114 @@
 
 ### (17) `lstopo --of svg > topo.svg`
 
-在 [topo.svg](topo.svg) 中，WSL2 显示一个 Machine、一个 Package、一个 NUMA Node；该 Package 下有共享的 32 MB L3、12 个 Core，每 Core 两个 PU，总计 24 个 PU。各 Core 对应 1024 KB L2、32 KB L1d、32 KB L1i；图上还列出 `eth0` 和若干虚拟块设备。
+[生成的拓扑图](topo.svg) 中有一个 Machine、一个 Package 和一个 NUMA Node。Package 下有 12 个 Core，每个 Core 对应两个 PU，共 24 个 PU；PU 对应系统可调度的逻辑 CPU，而不是额外的物理核。
 
-![生成 topo.svg 的命令](images/17-lstopo.png)
+图中每个 Core 对应 1024 KB L2、32 KB L1d 和 32 KB L1i，12 个 Core 上方是共享的 32 MB L3，还列出了 `eth0` 和虚拟块设备。它与 `lscpu` 展示的是同一套 WSL2 可见拓扑，图形更容易看清资源的从属和共享关系。
 
-![lstopo 生成的拓扑图](topo.svg)
+![lstopo 拓扑图](topo.svg)
 
 ### (18) Git 命令练习
 
-**① 用户名和邮箱。** 执行 `git config user.name "丁熙妍"`、`git config user.email "10234500007@stu.ecnu.edu.cn"`，再用 `git config --get` 查看设置结果。
+**① 用户名和邮箱。** 在初始化后的本地练习仓库中设置：
+
+```bash
+git config user.name "丁熙妍"
+git config user.email "10234500007@stu.ecnu.edu.cn"
+```
+
+这两条命令只设置当前仓库的提交身份，不会修改其他仓库的配置。
 
 ![Git 用户配置](images/18-git-config.png)
 
-**② 初始化和分支。** 执行 `git init` 后，`git branch --show-current` 输出 `master`。设置新仓库的默认分支名称可用 `git config --global init.defaultBranch main`；重命名当前分支可用 `git branch -m main`。
+**② 初始化和分支。** 执行 `git init` 后，`git branch --show-current` 显示 `master`。设置以后新建仓库的默认分支名称，可以使用：
+
+```bash
+git config --global init.defaultBranch main
+```
+
+重命名当前仓库分支，可以使用：
+
+```bash
+git branch -m main
+```
+
+前者影响以后新建的仓库，后者修改当前分支的名称，作用范围不同。
 
 ![仓库分支复核](images/18-git-init.png)
 
-**③ 提交。** 创建但未暂存 `README.md` 时执行 `git commit -m "docs: add practice readme"`，Git 提示有未跟踪文件、没有可提交的改动。执行 `git add README.md` 后再提交，得到首次 commit。
+**③ 提交。** 存在未跟踪文件、但尚未暂存任何改动时，`git commit` 提示没有可提交的改动。将 `README.md` 加入暂存区后再提交：
+
+```bash
+git add README.md
+git commit -m "docs: add practice readme"
+```
+
+关键不是文件是否已经保存在目录里，而是要提交的改动是否进入暂存区。
 
 ![未暂存文件时的提交结果](images/18-git-commit-before.png)
 
 ![首次提交记录](images/18-git-commit-after.png)
 
-**④ 图片忽略与取消跟踪。** 将 `practice.png` 加入仓库并提交：`git add practice.png`、`git commit -m "chore: add practice image"`。随后把文件名写入 `.gitignore`，执行 `git rm --cached practice.png`、`git add .gitignore` 和 `git commit -m "chore: ignore practice image"`。`git ls-files` 中已无该图片，`git check-ignore -v practice.png` 显示忽略规则，本地图片仍在。`git rm --cached` 从 Git 索引移除图片，保留工作区文件。
+**④ 图片忽略与取消跟踪。** 先将测试图片加入版本控制并提交：
+
+```bash
+git add practice.png
+git commit -m "chore: add practice image"
+```
 
 ![图片提交记录](images/18-git-image.png)
 
+随后在 `.gitignore` 中写入 `practice.png`，再执行：
+
+```bash
+git rm --cached practice.png
+git add .gitignore
+git commit -m "chore: ignore practice image"
+```
+
 ![忽略规则提交记录](images/18-git-ignore.png)
+
+最终 `git ls-files` 中不再有该图片，`git check-ignore -v practice.png` 命中忽略规则，本地图片仍然存在。`.gitignore` 不会自动取消已经跟踪的文件；`git rm --cached` 移除的是索引中的条目，不是工作区文件，也不会删除历史提交中的图片。
 
 ![最终跟踪文件与本地图片](images/18-git-final.png)
 
-![最终工作区状态](images/18-git-clean.png)
+**⑤ 语义化提交。** [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) 用 `type: description` 的形式说明变更性质，也可以添加 scope。本次的 `docs: add practice readme` 表示文档修改，图片追踪相关提交使用 `chore:`；`fix:` 用于修复，`feat:` 用于新增功能，破坏兼容性的变更需要明确标记。
 
-**⑤ 语义化提交。** 阅读 [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) 后，我的理解是：提交标题以 `type: description`（可选 scope）说明变更性质，例如 `docs: add practice readme` 表示文档变更，`fix: correct matrix size` 表示修复，`feat:` 表示新功能；破坏兼容性的变更需要显式标记。这样历史更容易阅读，也便于自动生成变更记录。练习仓库中的三条提交实际使用了 `docs:`、`chore:`。
+相比只写“update”，这样的标题能直接看出提交在做什么。不过类型只是分类，后面的描述仍要写清实际改动。
 
-**⑥ 合并方式。** `git merge` 把目标分支的历史并入当前分支，存在分叉时通常生成 merge commit，保留原提交关系；`git rebase` 把当前分支的提交依次重新应用到新基点，形成线性历史，提交 SHA 随之变化。重写共享分支后，其他人基于旧提交的分支需要重新对齐。
+**⑥ 合并方式。** `git merge` 合并两个分支的历史，存在分叉时通常生成 merge commit，保留原有提交关系；`git rebase` 将一组提交重新应用到新的基点，通常得到更线性的历史，但重新创建的提交 SHA 会变化。
+
+因此，两者不只是历史图形不同。对于已经被他人使用的共享提交，rebase 会改变他们所依赖的历史，需要额外协调；不能仅为了让历史看起来更直，就随意重写共享分支。
 
 ## 3. MIT 6.172 Homework 1: Getting Started
 
 ### Write-up 2
 
-原始 `pointer.c` 执行 `make pointer` 时，编译器对修改只读目标及重新赋值 const 指针的语句报错。逐项回答源码注释：
+按 `pointer.c` 中注释的顺序回答：
 
-1. `argv` 在 `main` 的参数中等效为 `char **`，指向各命令行参数字符串指针。
-2. `char d = *pc` 取得字符串 `"6.172"` 的首字符，输出 `char d = 6`。
-3. `pcp = argv` 合法，因为两者都是 `char **`。
-4. `pcc2` 的类型是 `char const *`，与 `const char *` 等价：指向不可经该指针修改的字符，指针自身可重新赋值。
-5. `*pcc = '7'` 非法，因为 `pcc` 指向 const char。
-6. `pcc = *pcp` 合法：右侧为 `char *`，可赋给指向 const char 的可变指针。
-7. `pcc = argv[0]` 同理合法。
-8. `cp = *pcp` 非法，因为 `cp` 是 `char * const`，指针自身不可重新赋值。
-9. `cp = *argv` 同理非法。
-10. `*cp = '!'` 合法，因为 `cp` 指向的字符不是 const。
-11. `cpc = *pcp` 非法，因为 `cpc` 是 `const char * const`，指针自身不可重新赋值。
-12. `cpc = argv[0]` 同理非法。
-13. `*cpc = '@'` 非法，因为 `cpc` 指向 const char。
+1. `argv` 在函数参数中等效为 `char **`，指向各命令行参数字符串的指针。
+2. `char d = *pc` 取出字符串 `"6.172"` 的首字符，因此输出 `char d = 6`。
+3. `pcp = argv` 合法，因为两者类型都是 `char **`。
+4. `pcc2` 是 `char const *`，与 `const char *` 等价：不能通过它修改字符，但可以改变指针的指向。
+5. `*pcc = '7'` 非法，因为它试图通过指向 const char 的指针修改字符。
+6. `pcc = *pcp` 合法，右侧是 `char *`，可以赋给 `const char *`；这里增加了访问限制，没有去掉 const。
+7. `pcc = argv[0]` 合法，原因同上。
+8. `cp = *pcp` 非法，因为 `cp` 是 `char * const`，指针本身不能重新赋值。
+9. `cp = *argv` 非法，同样是在修改 const 指针本身。
+10. `*cp = '!'` 合法，`cp` 的指向固定，但它指向的字符可以修改。
+11. `cpc = *pcp` 非法，因为 `cpc` 的指向不能改变。
+12. `cpc = argv[0]` 非法，原因同上。
+13. `*cpc = '@'` 非法，因为也不能通过 `cpc` 修改所指字符。
 
-注释六条非法赋值后，`make pointer` 编译成功。
-
-![原始 pointer.c 编译错误前半](images/writeup2-pointer-error-head.png)
-
-![原始 pointer.c 编译错误后半](images/writeup2-pointer-error-tail.png)
+判断这些语句时，要区分赋值目标是“指针本身”还是“指针指向的字符”。注释六条非法赋值后，`make pointer` 编译成功。
 
 ![注释非法语句后重新编译 pointer](images/writeup2-pointer-fixed.png)
 
 ### Write-up 3
 
-`sizes.c` 输出题目所列类型及其指针的 `sizeof`。本机 `int` 为 4 字节、`__int128` 为 16 字节。数组 `x` 用 `sizeof(x)` 测得整体 20 字节，用 `sizeof(&x)` 测得指向整个数组的指针 8 字节；`student` 对象及其指针均为 8 字节。
+`sizes.c` 同时输出题目所列类型和相应指针的 `sizeof`。本次各类型本身的大小不同，但所测对象指针均为 8 字节。指针大小反映的是存放地址所需的空间，不是被指向对象的大小。
+
+例如，`x` 是包含 5 个 `int` 的数组，`sizeof(x)` 为 20 字节；`sizeof(&x)` 测量指向整个数组的指针，为 8 字节。`student` 对象和它的指针本次都是 8 字节，但两次测量的对象仍然不同。
 
 ![类型及指针大小：前半](images/writeup3-sizes-part1.png)
 
@@ -246,7 +307,7 @@
 
 ### Write-up 4
 
-原 `swap(int i, int j)` 只交换函数内的值拷贝，不能改变 `main` 的 `k`、`m`。将参数改为指针，并在 `main` 中传入变量地址。
+原来的 `swap(int i, int j)` 只交换形参的值，不会改变 `main` 中的 `k` 和 `m`。修改后传入 `&k`、`&m`，函数通过 `*i`、`*j` 访问并修改原变量。这里仍然是值传递，只是传递的值变成了地址。
 
 ```c
 // Copyright (c) 2012 MIT License by 6.172 Staff
@@ -272,34 +333,49 @@ int main() {
 }
 ```
 
-`./swap` 输出 `k = 2, m = 1`。
+编译运行后输出 `k = 2, m = 1`，两个变量的值已交换。
 
 ![修改后的交换结果](images/writeup4-swap.png)
 
-`verifier.py` 对 `sizes.c` 和 `swap.c` 的检查结果为 `LGTM`。
+使用老师检查脚本的 Python 3 兼容副本验证，最终输出 `LGTM`，其中包括 `sizes.c` 和 `swap.c` 的结果检查。
 
 ![verifier 最终结果](images/writeup4-verifier.png)
 
 ### Write-up 5
 
-将 `matrix-multiply/Makefile` 的普通构建优化级别由 `-O1` 改为 `-O3`。执行 `make clean; make` 时，旧目标文件和二进制文件被清理，随后 `clang -O3 -DNDEBUG ...` 编译 `testbed.c`、`matrix_multiply.c` 并链接生成 `matrix_multiply`。
+将 Makefile 中普通构建的优化选项改为：
+
+```makefile
+CFLAGS_RELEASE := -O3 -DNDEBUG
+```
+
+执行 `make clean; make` 后，先删除旧目标文件和可执行文件，再以 `clang -O3 -DNDEBUG ...` 编译两个源文件并链接生成 `matrix_multiply`。清理旧文件是为了让修改后的编译选项作用于重新生成的程序；输出中的 `-O3` 说明该构建配置已经生效。这里确认的是编译选项生效，不能仅凭 `-O3` 判断实际加速幅度。
 
 ![O3 构建输出](images/writeup5-build.png)
 
 ### Write-up 6
 
-执行 `make clean; make ASAN=1; ./matrix_multiply` 后，LeakSanitizer 报告 `make_matrix` 中的内存泄漏：直接泄漏 48 字节，间接泄漏 288 字节，合计 336 字节、18 次分配。
+修复矩阵维度、尚未补充释放操作时，执行 `make clean; make ASAN=1; ./matrix_multiply`。LeakSanitizer 报告 `make_matrix` 中的分配发生泄漏：直接泄漏 48 字节，间接泄漏 288 字节，合计 336 字节、18 次分配。
+
+直接泄漏对应矩阵结构体，间接泄漏对应其关联的行指针数组和各行数据。程序能够运行结束，并不表示分配的内存已经正确释放。这里报告的是泄漏；矩阵元素未初始化的问题是在后续 Valgrind 检查中发现的。
 
 ![ASan/LeakSanitizer 报告](images/writeup6-asan.png)
 
 ### Write-up 7
 
-修复后执行 `./matrix_multiply -p`，两个 4×4 矩阵的乘积与逐项计算结果一致。
+矩阵部分有两个影响正确性的问题。首先，原来的 A 为 4×5，B 为 4×4，A 的列数与 B 的行数不一致；修正为 4×4 后，程序不再因维度不匹配而崩溃。其次，乘法循环使用 `C->values[i][j] += ...`，C 的元素必须先为 0，否则未初始化的值会参与累加。
+
+将矩阵行分配改为 `calloc(cols, sizeof(int))` 后，各元素从 0 开始，保留原来的乘法循环即可得到正确结果。这个修改解决的是初始化问题，不是改变矩阵乘法算法。
+
+运行 `./matrix_multiply -p` 后，输出与矩阵乘法定义一致。例如左上角元素为 `3×1 + 7×5 + 8×0 + 1×9 = 47`，与程序输出相同；其余元素也与逐项计算结果一致。
 
 ![修复后的矩阵乘法输出](images/writeup7-result.png)
 
 ### Write-up 8
 
-在输出结果后，调用现有的 `free_matrix()` 释放 A、B、C。最终执行 `valgrind --leak-check=full ./matrix_multiply -p`，报告显示 `in use at exit: 0 bytes in 0 blocks`、`All heap blocks were freed`、`ERROR SUMMARY: 0 errors`。
+一个矩阵的结构体、行指针数组和各行数据分别分配，因此只释放最外层结构体还不够。已有的 `free_matrix()` 会依次释放各行数据、行指针数组和结构体，在使用完 A、B、C 后分别调用即可。
+
+再次执行 `valgrind --leak-check=full ./matrix_multiply -p`，退出时剩余内存为 `0 bytes in 0 blocks`，并显示 `All heap blocks were freed` 和 `ERROR SUMMARY: 0 errors`。说明本次执行中没有检测到内存错误和泄漏。
 
 ![最终 Valgrind 结果](images/writeup8-valgrind-final.png)
+
